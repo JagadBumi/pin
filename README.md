@@ -23,3 +23,5 @@ server port 1080
 Set custom route 8.8.8.8/32;proxyhost/32
 
 Create account in https://fastssh.com
+
+<img src="https://github.com/JagadBumi/pin/blob/main/Screenshot_2022-12-09-00-39-36-1.png"/>
