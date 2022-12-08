@@ -11,7 +11,7 @@ pip2 install configparser
 <pre><code>
 git clone https://github.com/JagadBumi/pin
 cd pin;ls
-./run.sh
+bash run.sh
 </code></pre>
 
 Set config.ini payload proxyhost proxyport & ssh host port username password
