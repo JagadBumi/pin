@@ -1,4 +1,4 @@
-import os, socket, sys, select, thread, time, configparser
+import os, re, socket, sys, select, thread, time, configparser
 
 ru = lambda text: text.decode('utf-8', 'ignore')
 ur = lambda text: text.encode('utf-8', 'ignore')
@@ -138,10 +138,16 @@ if __name__ == '__main__':
     try:
         config.read_file(open(os.path.join(file_dir, 'config.ini')))
         payload = config['config']['payload']
-        phost = config['config']['proxyhost']
+        proxyhost = config['config']['proxyhost']
         pport = int(config['config']['proxyport'])
     except Exception as e:
         sys.exit(W + '+ config.ini not found !')
+    regx = r'[a-zA-Z0-9_]'
+    if re.match(regx,proxyhost):
+        try:
+            phost = socket.gethostbyname(proxyhost)
+        except:
+            phost = proxyhost
     try:
         lport = sys.argv[1]
     except Exception as e:
