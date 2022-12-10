@@ -37,7 +37,7 @@ class sshRun:
                 if 'y' in sys.argv[2]:
                     print(line)
                     if 'Permission denied' in line:
-                        print(R + 'username or password incorrect' + W)
+                        print(W + '<> ' + R + 'username or password incorrect' + W)
                         os.system('killall screen -q')
                         os.system('screen -wipe > /dev/null')
                         os.system('killall bash -q')
@@ -52,7 +52,7 @@ class sshRun:
                         print(G + 'Connect using ' + O + phost + ':' + pport + W)
                         print(C + rsp + W)
                     if 'Permission denied' in line:
-                        print(R + 'username or password incorrect' + W)
+                        print(W + '<> ' + R + 'username or password incorrect' + W)
                         os.system('killall screen -q')
                         os.system('screen -wipe > /dev/null')
                         os.system('killall bash -q')
@@ -62,14 +62,14 @@ class sshRun:
                 else:
                     print(line)
                     if 'Permission denied' in line:
-                        print(R + 'username or password incorrect' + W)
+                        print(W + '<> ' + R + 'username or password incorrect' + W)
                         os.system('killall screen -q')
                         os.system('screen -wipe > /dev/null')
                         os.system('killall bash -q')
                     
         except KeyboardInterrupt:
             os.system('clear')
-            sys.exit(W + '<> ' + O + 'ssh stopped !' + W)
+            sys.exit(W + '<> ' + O + 'ssh stopped' + W)
 
     def main(self):
         file_dir = os.path.dirname(os.path.realpath('__file__'))
@@ -101,5 +101,5 @@ try:
     logs = sys.argv[2]
 except Exception as e:
     os.system('clear')
-    sys.exit(W + '<> ' + O + 'Usage: python3 ssh.py 8080' + W)
+    sys.exit(W + '<> ' + O + 'Usage: python3 ssh.py 8080 n' + W)
 sshRun().main()
