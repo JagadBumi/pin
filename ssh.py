@@ -16,7 +16,7 @@ GR = '\x1b[37m'
 
 class sshRun:
 
-    def client(self, logs, host, port, username, password, phost, pport):
+    def client(self, host, port, username, password, phost, pport):
         proxycmd = f'-o "ProxyCommand corkscrew 127.0.0.1 {lport} %h %p"'
         sockport = f'-CND 1080'
         host = host
@@ -34,38 +34,21 @@ class sshRun:
             )
             for line in response.stdout:
                 line = line.decode('utf-8',errors='ignore')
-                if 'y' in sys.argv[2]:
-                    print(line)
-                    if 'Permission denied' in line:
-                        print(W + '<> ' + R + 'username or password incorrect' + W)
-                        os.system('killall screen -q')
-                        os.system('screen -wipe > /dev/null')
-                        os.system('killall bash -q')
-                    if 'debug1: pledge: proc' in line:
-                        print(W + '<> ' + G + 'SSH Connected' + W)
-                elif 'n' in sys.argv[2]:
-                    if 'HTTP/' in line:
-                        rsp = line.split('\n')[0]
-                        rsp = rsp.split(': ')[3]
-                        os.system('clear')
-                        print(G + 'CONNECT ' + host + ':' + port + ' HTTP/1.0' + W)
-                        print(G + 'Connect using ' + O + phost + ':' + pport + W)
-                        print(C + rsp + W)
-                    if 'Permission denied' in line:
-                        print(W + '<> ' + R + 'username or password incorrect' + W)
-                        os.system('killall screen -q')
-                        os.system('screen -wipe > /dev/null')
-                        os.system('killall bash -q')
-                    if 'debug1: pledge: proc' in line:
-                        print(W + '<> ' + G + 'SOCKS5 Port Forwarded ' + sockport.split(' ')[1] + W)
-                        print(W + '<> ' + G + 'SSH Connected' + W)
-                else:
-                    print(line)
-                    if 'Permission denied' in line:
-                        print(W + '<> ' + R + 'username or password incorrect' + W)
-                        os.system('killall screen -q')
-                        os.system('screen -wipe > /dev/null')
-                        os.system('killall bash -q')
+                if 'HTTP/' in line:
+                    rsp = line.split('\n')[0]
+                    rsp = rsp.split(': ')[3]
+                    os.system('clear')
+                    print(G + 'CONNECT ' + host + ':' + port + ' HTTP/1.0' + W)
+                    print(G + 'Connect using ' + O + phost + ':' + pport + W)
+                    print(C + rsp + W)
+                if 'Permission denied' in line:
+                    print(W + '<> ' + R + 'username or password incorrect' + W)
+                    os.system('killall screen -q')
+                    os.system('screen -wipe > /dev/null')
+                    os.system('killall bash -q')
+                if 'debug1: pledge: proc' in line:
+                    print(W + '<> ' + G + 'SOCKS5 Port Forwarded ' + sockport.split(' ')[1] + W)
+                    print(W + '<> ' + G + 'SSH Connected' + W)
                     
         except KeyboardInterrupt:
             os.system('clear')
@@ -94,12 +77,11 @@ class sshRun:
             os.system('clear')
             sys.exit(W + '<> ' + O + 'config.ini not found !' + W)
             
-        self.client(logs, host, port, username, password, phost, pport)
+        self.client(host, port, username, password, phost, pport)
         
 try:
     lport = sys.argv[1]
-    logs = sys.argv[2]
 except Exception as e:
     os.system('clear')
-    sys.exit(W + '<> ' + O + 'Usage: python3 ssh.py 8080 n' + W)
+    sys.exit(W + '<> ' + O + 'Usage: python3 ssh.py 8080' + W)
 sshRun().main()
