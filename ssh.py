@@ -5,13 +5,13 @@ import sys
 import re
 import os
 
-W = '\x1b[0m'
-R = '\x1b[31m'
+W = '\x1b[1;0m'
+R = '\x1b[1;31m'
 G = '\x1b[1;32m'
-O = '\x1b[33m'
-B = '\x1b[34m'
-P = '\x1b[35m'
-C = '\x1b[36m'
+O = '\x1b[1;33m'
+B = '\x1b[1;34m'
+P = '\x1b[1;35m'
+C = '\x1b[1;36m'
 GR = '\x1b[37m'
 
 class sshRun:
@@ -42,7 +42,10 @@ class sshRun:
                     print(G + 'Connect using ' + O + phost + ':' + pport + W)
                     print(C + rsp + W)
                 if 'Permission denied' in line:
+                    os.system('clear')
                     print(W + '<> ' + R + 'username or password incorrect' + W)
+                    print(W + '<> ' + R + username + W)
+                    print(W + '<> ' + R + password + W)
                     os.system('killall screen -q')
                     os.system('screen -wipe > /dev/null')
                     os.system('killall bash -q')
@@ -52,7 +55,10 @@ class sshRun:
                     
         except KeyboardInterrupt:
             os.system('clear')
-            sys.exit(W + '<> ' + O + 'ssh stopped' + W)
+            print(W + '<> ' + O + 'ssh stopped' + W)
+            os.system('killall screen -q')
+            os.system('screen -wipe > /dev/null')
+            os.system('killall bash -q')
 
     def main(self):
         file_dir = os.path.dirname(os.path.realpath('__file__'))
@@ -73,15 +79,18 @@ class sshRun:
                 except:
                     phost = proxyhost
                     pport = proxyport
-        except Exception as e:
+        except:
             os.system('clear')
-            sys.exit(W + '<> ' + O + 'config.ini not found !' + W)
+            print(W + '<> ' + O + 'config.ini not found !' + W)
+            os.system('killall screen -q')
+            os.system('screen -wipe > /dev/null')
+            os.system('killall bash -q')
             
         self.client(host, port, username, password, phost, pport)
         
 try:
     lport = sys.argv[1]
-except Exception as e:
+except:
     os.system('clear')
     sys.exit(W + '<> ' + O + 'Usage: python3 ssh.py 8080' + W)
 sshRun().main()
