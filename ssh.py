@@ -2,7 +2,6 @@ import configparser
 import subprocess
 import socket
 import sys
-import re
 import os
 
 W = '\x1b[1;0m'
@@ -33,13 +32,13 @@ class sshRun:
                 stderr=subprocess.STDOUT
             )
             for line in response.stdout:
-                line = line.decode('utf-8',errors='ignore')
+                line = line.decode('utf-8', errors='ignore')
                 if 'HTTP/' in line:
                     rsp = line.split('\n')[0]
                     rsp = rsp.split(': ')[3]
                     os.system('clear')
-                    print(G + 'CONNECT ' + host + ':' + port + ' HTTP/1.0' + W)
-                    print(G + 'Connect using ' + O + phost + ':' + pport + W)
+                    print(G + 'CONNECT ' + socket.gethostbyname(host) + ':' + port + ' HTTP/1.0' + W)
+                    print(G + 'Connect using ' + O + socket.gethostbyname(phost) + ':' + pport + W)
                     print(C + rsp + W)
                 if 'Permission denied' in line:
                     os.system('clear')
@@ -48,6 +47,7 @@ class sshRun:
                     print(W + '<> ' + R + password + W)
                     os.system('killall screen -q')
                     os.system('screen -wipe > /dev/null')
+                    os.system('killall python2 -q')
                     os.system('killall bash -q')
                 if 'debug1: pledge: proc' in line:
                     print(W + '<> ' + G + 'SOCKS5 Port Forwarded ' + sockport.split(' ')[1] + W)
@@ -58,8 +58,9 @@ class sshRun:
             print(W + '<> ' + O + 'ssh stopped' + W)
             os.system('killall screen -q')
             os.system('screen -wipe > /dev/null')
+            os.system('killall python2 -q')
             os.system('killall bash -q')
-
+            
     def main(self):
         file_dir = os.path.dirname(os.path.realpath('__file__'))
         config = configparser.ConfigParser()
@@ -69,21 +70,14 @@ class sshRun:
             port = config['ssh']['port']
             username = config['ssh']['username']
             password = config['ssh']['password']
-            proxyhost = config['config']['proxyhost']
-            proxyport = config['config']['proxyport']
-            regx = r'[a-zA-Z0-9_]'
-            if re.match(regx,proxyhost):
-                try:
-                    phost = socket.gethostbyname(proxyhost)
-                    pport = proxyport
-                except:
-                    phost = proxyhost
-                    pport = proxyport
+            phost = config['config']['proxyhost']
+            pport = config['config']['proxyport']
         except:
             os.system('clear')
             print(W + '<> ' + O + 'config.ini not found !' + W)
             os.system('killall screen -q')
             os.system('screen -wipe > /dev/null')
+            os.system('killall python2 -q')
             os.system('killall bash -q')
             
         self.client(host, port, username, password, phost, pport)

@@ -1,15 +1,15 @@
-import os, re, socket, sys, select, thread, time, configparser
+import os, socket, sys, select, thread, time, configparser, subprocess
 
 ru = lambda text: text.decode('utf-8', 'ignore')
 ur = lambda text: text.encode('utf-8', 'ignore')
 
-W = '\x1b[0m'
-R = '\x1b[31m'
+W = '\x1b[1;0m'
+R = '\x1b[1;31m'
 G = '\x1b[1;32m'
-O = '\x1b[33m'
-B = '\x1b[34m'
-P = '\x1b[35m'
-C = '\x1b[36m'
+O = '\x1b[1;33m'
+B = '\x1b[1;34m'
+P = '\x1b[1;35m'
+C = '\x1b[1;36m'
 GR = '\x1b[37m'
 
 BLOCK = ('')
@@ -138,16 +138,10 @@ if __name__ == '__main__':
     try:
         config.read_file(open(os.path.join(file_dir, 'config.ini')))
         payload = config['config']['payload']
-        proxyhost = config['config']['proxyhost']
+        phost = socket.gethostbyname(config['config']['proxyhost'])
         pport = int(config['config']['proxyport'])
     except Exception as e:
         sys.exit(W + '+ config.ini not found !')
-    regx = r'[a-zA-Z0-9_]'
-    if re.match(regx,proxyhost):
-        try:
-            phost = socket.gethostbyname(proxyhost)
-        except:
-            phost = proxyhost
     try:
         lport = sys.argv[1]
     except Exception as e:
