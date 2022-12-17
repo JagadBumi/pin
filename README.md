@@ -1,7 +1,7 @@
 # How to use pin
 <b>install python corkscrew screen</b>
 <pre><code>
-pkg install python python2 python3 corkscrew screen -y
+pkg install python python2 python3 sshpass corkscrew screen -y
 pip install configparser
 pip2 install configparser
 git clone https://github.com/JagadBumi/pin
