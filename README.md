@@ -1,7 +1,7 @@
 # How to use pin
-<b>install python corkscrew screen</b>
+<b>install python corkscrew sshpass screen</b>
 <pre><code>
-pkg install python python2 python3 sshpass corkscrew screen -y
+pkg install python python2 sshpass corkscrew screen -y
 pip install configparser
 pip2 install configparser
 git clone https://github.com/JagadBumi/pin
@@ -12,9 +12,9 @@ chmod +x *
 Set up config.ini the payload proxy host port and ssh host port username password
 <br>
 
-run the script run.sh
+run the script ssh.py
 <br>
-bash run.sh or ./run.sh
+python ssh.py
 <br>
 
 If connected open tun2tap for socks port forwarded
@@ -24,7 +24,3 @@ Server ip 127.0.0.1
 <br>
 Server port 1080
 <br>
-
-Set custom routes exclude
-<br>
-8.8.8.8/32;proxyhosthere/32
