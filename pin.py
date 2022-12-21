@@ -1,3 +1,4 @@
+#!/bin/python2
 import os, socket, sys, select, thread, time, configparser, subprocess
 
 ru = lambda text: text.decode('utf-8', 'ignore')
