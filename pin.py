@@ -11,7 +11,7 @@ O = '\x1b[1;33m'
 B = '\x1b[1;34m'
 P = '\x1b[1;35m'
 C = '\x1b[1;36m'
-GR = '\x1b[37m'
+GR = '\x1b[1;37m'
 
 BLOCK = ('')
 BUFFER = 1024
@@ -26,7 +26,7 @@ class realhost:
         if self.AThread_NetData:
             if self.firewall(self.AThread_NetData):
                 if 'HTTP' in self.AThread_NetData.splitlines()[0] and self.AThread_NetData.startswith('CONNECT'):
-                    self.client.send('HTTP/1.1 200 Connection Established\r\n\r\n')
+                    self.client.send('HTTP/1.0 200 Connection established\r\n\r\n')
                     self.Run_Programs()
                 #else:
                     #self.Run_Programs()
@@ -76,7 +76,7 @@ class realhost:
                         break
                         os.system('clear')
                         print(W + '+ ' + B + str(msg) + ' !')
-
+                        
                     if data:
                         if bite is self.client:
                             if self.firewall(data):
@@ -91,10 +91,8 @@ class realhost:
                     if out:
                         out.send(data)
                         count = 0
-
             if count == max_waiting:
                 break
-
         return
 
     def request_log(self, data):
@@ -110,7 +108,6 @@ class realhost:
         for i in BLOCK:
             if i in url:
                 return False
-
         return True
 
 def main(handler = realhost):
@@ -124,13 +121,14 @@ def main(handler = realhost):
         sys.exit(W + '+ ' + O + str(msg) + ' !' + W)
     else:
         s.listen(0)
-        while True:
-            try:
-                thread.start_new_thread(handler, s.accept())
-            except KeyboardInterrupt:
-                s.close()
-                os.system('clear')
-                sys.exit(W + '+ ' + O + 'pin.py stopped !' + W)
+    while True:
+        try:
+            thread.start_new_thread(handler, s.accept())
+        except KeyboardInterrupt:
+            s.close()
+            os.system('clear')
+            print(W + '+ ' + O + 'pin.py stopped !' + W)
+            break
 
 if __name__ == '__main__':
     os.system('clear')
@@ -138,9 +136,21 @@ if __name__ == '__main__':
     config = configparser.ConfigParser()
     try:
         config.read_file(open(os.path.join(file_dir, 'config.ini')))
-        payload = config['config']['payload']
-        phost = socket.gethostbyname(config['config']['proxyhost'])
-        pport = int(config['config']['proxyport'])
+        ptype = config['config']['proxytype']
+        if 'http' in ptype:
+            payload = config['config']['payload']
+            phost = socket.gethostbyname(config['config']['proxyhost'])
+            pport = int(config['config']['proxyport'])
+        if 'socks4' in ptype:
+            payload = 'CONNECT [host_port] HTTP/1.0[crlf]Host: [host][crlf][crlf]'
+            phost = '127.0.0.1'
+            pport = 8989
+        if 'socks5' in ptype:
+            payload = 'CONNECT [host_port] HTTP/1.0[crlf]Host: [host][crlf][crlf]'
+            phost = '127.0.0.1'
+            pport = 8989
+        else:
+            print(W + '+ ' + R + 'proxy type incorrect, use http, socks4, socks5' + W)
     except Exception as e:
         sys.exit(W + '+ config.ini not found !')
     try:
