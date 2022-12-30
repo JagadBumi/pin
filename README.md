@@ -2,7 +2,7 @@
 <b>install python corkscrew sshpass screen</b>
 <pre><code>
 pkg install python python2 sshpass corkscrew screen -y
-pip install configparser
+pip install configparser pproxy
 pip2 install configparser
 git clone https://github.com/JagadBumi/pin
 cd pin
