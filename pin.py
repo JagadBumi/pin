@@ -137,20 +137,21 @@ if __name__ == '__main__':
     try:
         config.read_file(open(os.path.join(file_dir, 'config.ini')))
         ptype = config['config']['proxytype']
-        if 'http' in ptype:
+        if ptype == 'http':
             payload = config['config']['payload']
             phost = socket.gethostbyname(config['config']['proxyhost'])
             pport = int(config['config']['proxyport'])
-        if 'socks4' in ptype:
+        elif ptype == 'socks4':
             payload = 'CONNECT [host_port] HTTP/1.0[crlf]Host: [host][crlf][crlf]'
             phost = '127.0.0.1'
             pport = 8989
-        if 'socks5' in ptype:
+        elif ptype == 'socks5':
             payload = 'CONNECT [host_port] HTTP/1.0[crlf]Host: [host][crlf][crlf]'
             phost = '127.0.0.1'
             pport = 8989
         else:
             print(W + '+ ' + R + 'proxy type incorrect, use http, socks4, socks5' + W)
+            sys.exit()
     except Exception as e:
         sys.exit(W + '+ config.ini not found !')
     try:

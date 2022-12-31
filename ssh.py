@@ -87,12 +87,12 @@ class sshRun:
             ptype = config['config']['proxytype']
             
             os.system('clear')
-            if 'http' in ptype:
+            if ptype ==  'http':
                 os.system('screen -AmdS nohub python2 pin.py %s' % lport)
-            elif 'socks4' in ptype:
+            elif ptype == 'socks4':
                 os.system('screen -AmdS nohub pproxy -l http://:8989 -r socks4://%s:%s -vv' % (phost, pport))
                 os.system('screen -AmdS nohub python2 pin.py %s' % lport)
-            elif 'socks5' in ptype:
+            elif ptype == 'socks5':
                 os.system('screen -AmdS nohub pproxy -l http://:8989 -r socks5://%s:%s -vv' % (phost, pport))
                 os.system('screen -AmdS nohub python2 pin.py %s' % lport)
             else:
