@@ -48,7 +48,7 @@ class sshRun:
                     rsp = rsp.split(': ')[3]
                     print(C + rsp + W)
                     
-                if 'Connection timed out' in line:
+                if 'Connection timed out during banner exchange' in line:
                     print(R + 'Connection timed out during' + W)
                     
                 if 'Permission denied' in line:
