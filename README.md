@@ -23,8 +23,9 @@ If connected open tun2tap for socks port forwarded
 Server ip 127.0.0.1
 <br>
 Server port 1080
-<br>
-
+<br><br>
+Download <a href="https://sfile.mobi/PXIoOKEZUs7">Tun2tap for Android</a>
+<br><br>
 Watch video tutorial https://youtu.be/TB0lxvknEEw
 <br>
 Don't forget like and subscribe
