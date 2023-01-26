@@ -26,8 +26,3 @@ Server port 1080
 <br><br>
 Download <a href="https://sfile.mobi/PXIoOKEZUs7">Tun2tap for Android</a>
 <br><br>
-Watch video tutorial https://youtu.be/TB0lxvknEEw
-<br>
-Don't forget like and subscribe
-<br>
-
