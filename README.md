@@ -17,6 +17,8 @@ run the script ssh.py
 python ssh.py OR ./ssh.py
 <br>
 
+<img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEix4RJKuSAlpLaqgYP6Prap1Tln3r2qHqj_3O9GR5GddRm9KNUlWYllqIq1ehi7eI26gnAHqg3mXQZe52QqvMr5pVrNxm6Q2on2qWj28VvN2MIpLg6hhGRhuvnq9hsH-BILtJsFiFphMf_WVYzvsAZceT4Motb6ThdC2icaLsj2BT0lmDkavlbZRzrX/s320/Screenshot_2023-02-09-23-23-21-1.png"/>
+
 If connected open tun2tap for socks port forwarded
 <br>
 
